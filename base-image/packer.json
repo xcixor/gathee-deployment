@@ -10,7 +10,7 @@
         "project_id": "{{user `project_id`}}",
         "source_image": "ubuntu-1604-xenial-v20191217",
         "ssh_username": "packer",
-        "zone": "us-central1-a",
+        "zone": "us-west1-a",
         "image_name": "gathee-base-image"
       }
     ],

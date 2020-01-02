@@ -16,7 +16,7 @@
  ```
 
 3. Setup the service account;
-  Instructions to create a service account can be found [here](https://cloud.google.com/iam/docs/creating-managing-service-accounts). The role that the account will be able to perform is the most crucial part of setting up the account. The minimum capabilities that the account should have are Compute Image User, Compute Instance Admin and Service Account Actor. Download the Service Account JSON key to your machine after giving the Service Account its roles.
+  Instructions to create a service account can be found [here](https://cloud.google.com/iam/docs/creating-managing-service-accounts). The role that the account will be able to perform is the most crucial part of setting up the account. The minimum capabilities that the account should have are Compute Image User, Compute Instance Admin (v1), Service Account User and Service Account Token. Download the Service Account JSON key to your machine after giving the Service Account its roles.
 
   Once you have gotten the key, change the name of the file [account.json.example](../account/account.json.example) to account.json. This file is located under the *account* directory. Delete the contents in the file and paste your JSON key here.
 
@@ -39,7 +39,7 @@ packer build --var-file variables.json packer.json
 6. Visit GCP console to confirm that your image has been created.
 
   On the menu page under Compute Engine click on Images.
-  ![Images-GCE-Menu](../../docs/images/images-gce.png)
+  ![Images-GCE-Menu](../docs/images/image-gce.png)
 
-  You should be able to see the image pelly-base-image on the list of images.
-  ![Pelly-Base-Image](../../docs/images/dashboard.png)
+  You should be able to see the image gathee-base-image on the list of images.
+  ![Gathee-Base-Image](../docs/images/dashboard.png)
