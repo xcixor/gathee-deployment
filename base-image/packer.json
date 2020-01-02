@@ -1,0 +1,25 @@
+{
+    "variables": {
+        "project_id": "{{env `PROJECT_ID`}}"
+      },
+
+    "builders": [
+      {
+        "type": "googlecompute",
+        "account_file": "../account/account.json",
+        "project_id": "{{user `project_id`}}",
+        "source_image": "ubuntu-1604-xenial-v20191217",
+        "ssh_username": "packer",
+        "zone": "us-central1-a",
+        "image_name": "gathee-base-image"
+      }
+    ],
+
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "./setup.sh"
+        }
+    ]
+
+}
