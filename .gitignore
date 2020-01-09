@@ -1,2 +1,5 @@
 base-image/variables.json
-account/account.json
+*account.json*
+infrastructure/terraform.tfvars
+.env
+.terraform
