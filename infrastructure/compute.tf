@@ -5,7 +5,7 @@ resource "google_compute_instance" "name" {
   zone         = "${var.zone}"
   name         = "${var.compute_instance_name}"
   machine_type = "${var.machine_type}"
-  tags = ["${var.environment}-https-firewall", "${var.environment}-ssh-firewall", "${var.environment}-http-firewall"]
+  tags = ["${var.compute_instance_name}-https-firewall", "${var.compute_instance_name}-ssh-firewall", "${var.compute_instance_name}-http-firewall"]
 
   boot_disk {
     initialize_params {
@@ -41,27 +41,17 @@ resource "google_compute_instance" "name" {
     email_host_user = "${var.email_host_user}"
     email_host_password = "${var.email_host_password}"
     gs_credentials = "${file("../account/account.json")}"
-    # gs_credentials = "${var.gs_credentials}"
   }
 
   service_account {
-    email = "${google_service_account.nyota-admin.email}"
+    email = "${google_service_account.name.email}"
     scopes = ["storage-full"]
   }
 
-  # provisioner "file" {
-  #   source      ="${file("../account/account.json")}"
-  #   destination = "/etc/account.json"
-  # }
-
 }
 
-resource "google_service_account" "nyota-admin" {
+resource "google_service_account" "name" {
   account_id   = "${var.compute_instance_name}"
   display_name = "${var.compute_instance_name}"
+  name         = "${var.compute_instance_name}"
 }
-
-# data "local_file" "credentials" {
-#     filename = "${file("../account/account.json")}"
-# }
-

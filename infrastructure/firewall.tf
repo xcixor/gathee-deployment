@@ -1,6 +1,6 @@
 resource "google_compute_firewall" "http-firewall" {
     project = "${var.project}"
-    name    = "${var.environment}-allow-http"
+    name    = "${var.compute_instance_name}-allow-http"
     network = "${var.network}"
 
     allow {
@@ -9,12 +9,12 @@ resource "google_compute_firewall" "http-firewall" {
     }
 
     source_ranges = ["0.0.0.0/0"]
-    target_tags   = ["${var.environment}-http-firewall"]
+    target_tags   = ["${var.compute_instance_name}-http-firewall"]
 }
 
 resource "google_compute_firewall" "ssh-firewall" {
     project = "${var.project}"
-    name    = "${var.environment}-allow-ssh"
+    name    = "${var.compute_instance_name}-allow-ssh"
     network = "${var.network}"
 
 
@@ -24,12 +24,12 @@ resource "google_compute_firewall" "ssh-firewall" {
     }
 
     source_ranges = ["0.0.0.0/0"]
-    target_tags   = ["${var.environment}-ssh-firewall"]
+    target_tags   = ["${var.compute_instance_name}-ssh-firewall"]
 }
 
 resource "google_compute_firewall" "https-firewall" {
     project = "${var.project}"
-    name    = "${var.environment}-allow-https"
+    name    = "${var.compute_instance_name}-allow-https"
     network = "${var.network}"
 
     allow {
@@ -38,5 +38,5 @@ resource "google_compute_firewall" "https-firewall" {
     }
 
     source_ranges = ["0.0.0.0/0"]
-    target_tags   = ["${var.environment}-https-firewall"]
+    target_tags   = ["${var.compute_instance_name}-https-firewall"]
 }
