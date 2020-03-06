@@ -42,16 +42,4 @@ resource "google_compute_instance" "name" {
     email_host_password = "${var.email_host_password}"
     gs_credentials = "${file("../account/account.json")}"
   }
-
-  # service_account {
-  #   email = "${google_service_account.name.email}"
-  #   scopes = ["storage-full"]
-  # }
-
 }
-
-# resource "google_service_account" "name" {
-#   account_id   = "${var.compute_instance_name}"
-#   display_name = "${var.compute_instance_name}"
-#   name         = "${var.compute_instance_name}"
-# }

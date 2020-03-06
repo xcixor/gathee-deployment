@@ -30,8 +30,9 @@ get_required_variables () {
     export EMAIL_HOST_USER="$(get_var "email_host_user")"
     export EMAIL_HOST_PASSWORD="$(get_var "email_host_password")"
     export SERVICE_ACCOUNT="$(get_var "gs_credentials")"
+    # for simplicity we only have one domain
+    export DOMAINS="$(get_var "application_host")"
     export GOOGLE_APPLICATION_CREDENTIALS="/usr/local/gs-account/account.json"
-    # export GOOGLE_APPLICATION_CREDENTIALS=$(cat /etc/account.json)
 }
 
 clone_repository() {
@@ -47,6 +48,50 @@ clone_repository() {
 create_service_account(){
     mkdir /usr/local/gs-account
     echo "${SERVICE_ACCOUNT}" > /usr/local/gs-account/account.json
+}
+
+create_domain_txt_file(){
+    mkdir /usr/local/domains
+    echo "${DOMAINS}" > /usr/local/domains/domain_list.txt
+}
+
+create_certificates(){
+    certbot='/usr/bin/certbot  --agree-tos --email ndunguwanyinge@gmail.com --nginx --redirect --expand -n '
+    vhost=( `cat "/usr/local/domains/domain_list.txt" `)
+
+    # loop variables
+    ssl_exec="${certbot}"
+    n=1
+
+    #################### START ##########################
+
+    for t in "${vhost[@]}"
+    do
+
+        ssl_exec="${ssl_exec} -d $t "
+        let "n++"
+
+        # every 100th domain, create a SSL certificate
+        if (( n == 100 )); then
+
+            $ssl_exec
+            #echo $ssl_exec
+
+        # reset the loop variables
+        ssl_exec="${certbot}"
+        n=1
+    fi
+
+    done
+
+    # create SSl certificate for the rest of the domains
+    #echo $ssl_exec
+    $ssl_exec
+}
+
+setup_ssl_certificates(){
+    sudo cp -r /etc/letsencrypt/ ~/
+    sudo chmod -R 777 ~/letsencrypt
 }
 
 copy_nginx_conf() {
@@ -72,6 +117,9 @@ configure_pelly_website() {
 
 main (){
     get_required_variables
+    create_domain_txt_file
+    create_certificates
+    setup_ssl_certificates
     clone_repository
     create_service_account
     copy_nginx_conf

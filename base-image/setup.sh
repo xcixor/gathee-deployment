@@ -44,9 +44,22 @@ install_python_3_7(){
     sudo make install
 }
 
+install_certbot(){
+    sudo add-apt-repository ppa:certbot/certbot -y
+    sudo apt-get update
+    sudo apt-get install software-properties-common -y
+    sudo apt-get install certbot -y
+}
+
+install_certbot_plugin(){
+    sudo apt-get install python-certbot-nginx -y
+}
+
 main () {
     install_dependencies
     install_python_3_7
+    install_certbot
+    install_certbot_plugin
 }
 
 main "$@"
