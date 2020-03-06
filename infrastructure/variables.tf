@@ -109,5 +109,3 @@ variable "google_application_credentials" {
 variable "gs_credentials" {
 
 }
-
-
